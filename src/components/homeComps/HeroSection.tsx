@@ -18,6 +18,7 @@ const HeroSection = ({}: IHeroSectionProps) => {
   }
 
   const [activeCondition, setActiveCondition] = useState<string>("all")
+  const [activeType, setActiveType] = useState<string>("sail")
 
   const handleCondition = (e: React.MouseEvent<HTMLLabelElement, MouseEvent>) => {
     const item = e.currentTarget.firstElementChild as HTMLElement
@@ -27,7 +28,7 @@ const HeroSection = ({}: IHeroSectionProps) => {
   const handleType = (e: React.MouseEvent<HTMLLabelElement, MouseEvent>) => {
     const item = e.currentTarget.firstElementChild as HTMLElement
 
-    setActiveCondition(item.id)
+    setActiveType(item.id)
   }
 
   return (
@@ -50,7 +51,9 @@ const HeroSection = ({}: IHeroSectionProps) => {
             <div className="flex justify-start items-center gap-5">
               <label
                 onClick={handleCondition}
-                className={`${activeCondition === "all" ? "bg-black text-white" : "bg-blue-100 text-black"}  px-7 py-2`}
+                className={`${
+                  activeCondition === "all" ? "bg-black text-white" : "bg-blue-100 text-black"
+                }  px-7 py-2 cursor-pointer`}
                 htmlFor="all">
                 All
                 <input
@@ -64,7 +67,9 @@ const HeroSection = ({}: IHeroSectionProps) => {
               </label>
               <label
                 onClick={handleCondition}
-                className={`${activeCondition === "new" ? "bg-black text-white" : "bg-blue-100 text-black"} px-7 py-2`}
+                className={`${
+                  activeCondition === "new" ? "bg-black text-white" : "bg-blue-100 text-black"
+                } px-7 py-2 cursor-pointer`}
                 htmlFor="new">
                 New
                 <input
@@ -78,7 +83,9 @@ const HeroSection = ({}: IHeroSectionProps) => {
               </label>
               <label
                 onClick={handleCondition}
-                className={`${activeCondition === "old" ? "bg-black text-white" : "bg-blue-100 text-black"}  px-7 py-2`}
+                className={`${
+                  activeCondition === "old" ? "bg-black text-white" : "bg-blue-100 text-black"
+                }  px-7 py-2 cursor-pointer`}
                 htmlFor="old">
                 Old
                 <input
@@ -94,11 +101,21 @@ const HeroSection = ({}: IHeroSectionProps) => {
             {/* Type */}
             <p className="mt-5 mb-1">Type</p>
             <div className="flex justify-start items-center gap-5">
-              <label className="bg-blue-100 px-7 py-2" htmlFor="sail">
+              <label
+                onClick={handleType}
+                className={`${
+                  activeType === "sail" ? "bg-black text-white" : "bg-blue-100 text-black"
+                } px-7 py-2 cursor-pointer`}
+                htmlFor="sail">
                 Sail
                 <input {...register("type")} type="radio" value="sail" name="type" id="sail" className="hidden" />
               </label>
-              <label className="bg-blue-100 px-7 py-2" htmlFor="motor">
+              <label
+                onClick={handleType}
+                className={`${
+                  activeType === "motor" ? "bg-black text-white" : "bg-blue-100 text-black"
+                } px-7 py-2 cursor-pointer`}
+                htmlFor="motor">
                 Motor
                 <input {...register("type")} type="radio" value="motor" name="type" id="motor" className="hidden" />
               </label>
