@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useState } from "react"
 import Container from "../ui/Container"
 import Logo from "../ui/Logo"
 
@@ -10,14 +10,15 @@ const Navbar = ({}: INavbarProps) => {
   const handleSandwichButton = () => {
     setIsOpen((prev) => (prev = !prev))
   }
-
   return (
     <>
       <header className="bg-slate-300 relative">
         <Container>
           {/* Inner nav */}
           <div className="flex justify-between items-center">
-            <Logo />
+            <a href="/">
+              <Logo />
+            </a>
 
             <button>Sell my boat</button>
             {/* Mobile Sandwich button | Visible up to 767px */}
@@ -28,10 +29,7 @@ const Navbar = ({}: INavbarProps) => {
                 className={`${
                   isOpen ? "rotate-45 translate-y-[10px]" : "rotate-0"
                 } w-8 h-[2px] bg-black mb-2 transition-all`}></div>
-              <div
-                className={`${
-                  isOpen ? "hidden" : "block"
-                } w-8 h-[2px] bg-black transition-all`}></div>
+              <div className={`${isOpen ? "hidden" : "block"} w-8 h-[2px] bg-black transition-all`}></div>
               <div
                 className={`${
                   isOpen ? "-rotate-45 translate-y-[-8px]" : "rotate-0"
@@ -41,22 +39,22 @@ const Navbar = ({}: INavbarProps) => {
             <div
               className={`${
                 isOpen ? "translate-x-0" : "-translate-x-full"
-              } absolute left-0 top-[66px] bg-stone-400 transition-all duration-[400ms] w-2/3 md:hidden`}>
+              } absolute left-0 top-[66px] bg-stone-400 transition-all duration-[400ms] w-2/3 md:hidden z-20`}>
               <nav className="text-center">
                 <ul className="">
                   <li>
-                    <a className="w-full block bg-green-500 px-10 py-4" href="/">
-                      Signup
-                    </a>
-                  </li>
-                  <li>
-                    <a className="w-full block bg-green-500 px-10 py-4" href="/">
+                    <a className="w-full block bg-stone-100 border-b-2 px-10 py-5" href="/auth/login">
                       Login
                     </a>
                   </li>
                   <li>
-                    <a className="w-full block bg-green-500 px-10 py-4" href="/">
+                    <a className="w-full block bg-stone-100 border-b-2 px-10 py-5" href="/auth/signup">
                       Signup
+                    </a>
+                  </li>
+                  <li>
+                    <a className="w-full block bg-stone-100 px-10 py-5" href="/">
+                      Dashboard
                     </a>
                   </li>
                 </ul>
@@ -64,10 +62,10 @@ const Navbar = ({}: INavbarProps) => {
             </div>
             {/* Login/Signup Tablet and Over */}
             <div className="hidden md:flex md:gap-5 items-center">
-              <a className="" href="/">
+              <a className="" href="/auth/login">
                 Login
               </a>
-              <a className="" href="/">
+              <a className="" href="/auth/signup">
                 Signup
               </a>
             </div>

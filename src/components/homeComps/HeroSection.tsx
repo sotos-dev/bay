@@ -10,26 +10,29 @@ const HeroSection = ({}: IHeroSectionProps) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors }
-  } = useForm()
+  } = useForm({
+    defaultValues: {
+      make: "",
+      condition: "all",
+      type: "sail",
+      length: "meters",
+      minLength: "",
+      maxLength: "",
+      yearMadeMin: "",
+      yearMadeMax: "",
+      priceRange: ""
+    }
+  })
 
   const makeQuery = (data: any) => {
     console.log(data)
   }
 
+  // These are for CSS only - to show which one is active---------------
   const [activeCondition, setActiveCondition] = useState<string>("all")
   const [activeType, setActiveType] = useState<string>("sail")
-
-  const handleCondition = (e: React.MouseEvent<HTMLLabelElement, MouseEvent>) => {
-    const item = e.currentTarget.firstElementChild as HTMLElement
-
-    setActiveCondition(item.id)
-  }
-  const handleType = (e: React.MouseEvent<HTMLLabelElement, MouseEvent>) => {
-    const item = e.currentTarget.firstElementChild as HTMLElement
-
-    setActiveType(item.id)
-  }
 
   return (
     <>
@@ -40,17 +43,17 @@ const HeroSection = ({}: IHeroSectionProps) => {
         </div>
 
         <Container>
-          <form onSubmit={handleSubmit(makeQuery)} className="relative z-10 bg-gray-400 max-w-sm p-10">
+          <form onSubmit={handleSubmit(makeQuery)} className="relative z-10 bg-gray-300 max-w-sm p-7">
             {/* Make */}
             <div className="flex flex-col">
               <label htmlFor="">Make</label>
-              <input {...register("make")} type="text" />
+              <input {...register("make")} type="text" placeholder="Enter a boat make" />
             </div>
             {/* Condition */}
             <p className="mt-5 mb-1">Condition</p>
             <div className="flex justify-start items-center gap-5">
               <label
-                onClick={handleCondition}
+                onClick={() => setActiveCondition("all")}
                 className={`${
                   activeCondition === "all" ? "bg-black text-white" : "bg-blue-100 text-black"
                 }  px-7 py-2 cursor-pointer`}
@@ -66,7 +69,7 @@ const HeroSection = ({}: IHeroSectionProps) => {
                 />
               </label>
               <label
-                onClick={handleCondition}
+                onClick={() => setActiveCondition("new")}
                 className={`${
                   activeCondition === "new" ? "bg-black text-white" : "bg-blue-100 text-black"
                 } px-7 py-2 cursor-pointer`}
@@ -82,7 +85,7 @@ const HeroSection = ({}: IHeroSectionProps) => {
                 />
               </label>
               <label
-                onClick={handleCondition}
+                onClick={() => setActiveCondition("old")}
                 className={`${
                   activeCondition === "old" ? "bg-black text-white" : "bg-blue-100 text-black"
                 }  px-7 py-2 cursor-pointer`}
@@ -102,7 +105,7 @@ const HeroSection = ({}: IHeroSectionProps) => {
             <p className="mt-5 mb-1">Type</p>
             <div className="flex justify-start items-center gap-5">
               <label
-                onClick={handleType}
+                onClick={() => setActiveType("sail")}
                 className={`${
                   activeType === "sail" ? "bg-black text-white" : "bg-blue-100 text-black"
                 } px-7 py-2 cursor-pointer`}
@@ -111,7 +114,7 @@ const HeroSection = ({}: IHeroSectionProps) => {
                 <input {...register("type")} type="radio" value="sail" name="type" id="sail" className="hidden" />
               </label>
               <label
-                onClick={handleType}
+                onClick={() => setActiveType("motor")}
                 className={`${
                   activeType === "motor" ? "bg-black text-white" : "bg-blue-100 text-black"
                 } px-7 py-2 cursor-pointer`}
@@ -120,9 +123,62 @@ const HeroSection = ({}: IHeroSectionProps) => {
                 <input {...register("type")} type="radio" value="motor" name="type" id="motor" className="hidden" />
               </label>
             </div>
-            <button type="submit" className="mt-7 bg-pink-700 px-10 py-3 text-white">
-              Search
-            </button>
+            {/* Length */}
+            <div className="flex justify-between items-center max-w-full mt-7">
+              <div className="flex items-center gap-2">
+                <p>Length</p>
+                <input {...register("length")} type="radio" name="length" value="meters" id="meters" />
+                <label htmlFor="meters">m</label>
+                <input {...register("length")} type="radio" name="length" value="feet" id="feet" />
+                <label htmlFor="feet">ft</label>
+              </div>
+              <div className="flex items-center gap-2">
+                <input {...register("minLength")} className="w-16" type="text" />
+                <span>to</span>
+                <input {...register("maxLength")} className="w-16" type="text" />
+              </div>
+            </div>
+            {/* Year Made */}
+            <div className="flex justify-between items-center mt-7">
+              <div>
+                <p>Year made</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <input {...register("yearMadeMin")} className="w-16" type="text" />
+                <span>to</span>
+                <input {...register("yearMadeMax")} className="w-16" type="text" />
+              </div>
+            </div>
+            {/* Price range selection */}
+            <div className="flex justify-between items-center mt-7">
+              <p>Price range</p>
+              <select {...register("priceRange")} name="priceRange" id="price-range">
+                <option value="">Select a value</option>
+                <option value="1">$0 - $5000</option>
+                <option value="2">$5001 - $10000</option>
+                <option value="3">$10001 - $15000</option>
+                <option value="4">$15001 - $20000</option>
+                <option value="5">$20001 - $25000</option>
+                <option value="6">$30001 - $35000</option>
+                <option value="7">$35001+</option>
+              </select>
+            </div>
+            {/* Search Button */}
+            <div className="flex items-center justify-between">
+              <button
+                onClick={() => {
+                  reset()
+                  setActiveCondition("all")
+                  setActiveType("sail")
+                }}
+                type="button"
+                className="mt-7 bg-gray-600 px-10 py-3 text-white">
+                Reset
+              </button>
+              <button type="submit" className="mt-7 bg-pink-700 px-10 py-3 text-white">
+                Search
+              </button>
+            </div>
           </form>
         </Container>
       </div>
