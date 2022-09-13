@@ -4,17 +4,17 @@ import Container from "../../ui/Container"
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs"
 import { useState } from "react"
 import axios from "axios"
+import { useRouter } from "next/router"
 
 interface ISignupPageProps {}
 
 const SignupPage: NextPage = ({}: ISignupPageProps) => {
   const [inputType, setInputType] = useState("password")
+  const router = useRouter()
 
   const {
     register,
     handleSubmit,
-    reset,
-    setError,
     formState: { errors }
   } = useForm({
     defaultValues: {
@@ -33,7 +33,8 @@ const SignupPage: NextPage = ({}: ISignupPageProps) => {
         email: data.email,
         password: data.password
       })
-      console.log(user)
+      console.log(user.data)
+      router.push("/")
     } catch (error) {
       console.log(`there is an error message: => ${error}`)
     }
@@ -44,6 +45,7 @@ const SignupPage: NextPage = ({}: ISignupPageProps) => {
       <main className="h-screen bg-green-300 flex items-center justify-center ">
         <Container>
           <div className="">
+            <h1 className=" text-xl mb-5">Signup</h1>
             <form onSubmit={handleSubmit(registerUser)} className="bg-gray-200 p-7 flex flex-col gap-4 max-w-lg">
               <div className="flex flex-col">
                 <label htmlFor="username">Username</label>
@@ -81,7 +83,7 @@ const SignupPage: NextPage = ({}: ISignupPageProps) => {
                   id="email"
                   className="h-12 w-full"
                 />
-                <label htmlFor="email" className="mt-5">
+                {/* <label htmlFor="email" className="mt-5">
                   Verify Email
                 </label>
                 <input
@@ -99,7 +101,7 @@ const SignupPage: NextPage = ({}: ISignupPageProps) => {
                   id="verifyEmail"
                   className="h-12 w-full"
                 />
-                <p className="text-rose-700 mt-2">{errors.email?.message}</p>
+                <p className="text-rose-700 mt-2">{errors.email?.message}</p> */}
               </div>
               <div className="flex flex-col">
                 <label htmlFor="">Password</label>

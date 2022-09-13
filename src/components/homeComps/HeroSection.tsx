@@ -39,7 +39,7 @@ const HeroSection = ({}: IHeroSectionProps) => {
       <div className="relative py-20">
         {/* Absolutely positioned background image - optimized */}
         <div className="absolute left-0 top-0 right-0 bottom-0 z-0">
-          <Image src={HeroImage} alt="hero image" layout="fill" objectFit="cover" />
+          <Image src={HeroImage} alt="hero image" layout="fill" objectFit="cover" priority />
         </div>
 
         <Container>
